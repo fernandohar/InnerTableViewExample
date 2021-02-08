@@ -75,14 +75,14 @@ class ViewController: UIViewController {
 extension ViewController{
     private func createMockOrders(){
         // create a few drinks
-        let cokaCoka = Product(productName: "Coka Cola",  productDescription: "5oz Size", price: 12.5)
+        let cokaCoka = Product(productName: "Coka Cola",  productDescription: "5oz Soda", price: 12.5)
         let cokeZero = Product(productName: "Coka Zero", productDescription: "5oz Size", price: 12.5)
         let frenchFries = Product(productName: "French Fries", price: 16.0)
         let doubleCheese = Product(productName: "Double Cheeseburger", price: 38.0)
         let cheesyAngus = Product(productName: "Cheesy Champignon Angus Burger", productDescription: "With 130g patty", price: 35.0)
         let beef_n_egg = Product(productName: "Beef and Egg Burger", productDescription: "Limited time only", price: 19.00)
         let chickenNuggets = Product(productName: "Chicken Nuggets (6 pcs)", price: 19.5)
-        let spicyChicken = Product(productName: "Spicy Jalapeno Chicken Burger", price: 33.0)
+        let spicyChicken = Product(productName: "Spicy Jalapeno Chicken Burger", productDescription:"Chicken Burger with Spicy Jalapeno Pepper and extra sauce", price: 33.0)
         let gcb = Product(productName: "GCB", productDescription: "Grilled Chicken Burger", price: 23.5)
         
         //Order 1 - Double Cheese burger mean
@@ -91,7 +91,7 @@ extension ViewController{
         allOrders.append(order1)
         order1.addSelectedProduct(SelectedProduct(product: cokaCoka))
         order1.addSelectedProduct(SelectedProduct(product: frenchFries))
-        order1.addSelectedProduct(SelectedProduct(product: doubleCheese))
+        order1.addSelectedProduct(SelectedProduct(product: spicyChicken))
         
         
         //Order 2 - 2 person mean
@@ -103,7 +103,7 @@ extension ViewController{
         order2.addSelectedProduct(SelectedProduct(product: doubleCheese, quantity: 2))
         order2.addSelectedProduct(SelectedProduct(product: cheesyAngus, quantity: 2))
         order2.addSelectedProduct(SelectedProduct(product: doubleCheese, quantity: 2))
-        order2.addSelectedProduct(SelectedProduct(product: cheesyAngus, quantity: 200))
+        order2.addSelectedProduct(SelectedProduct(product: spicyChicken, quantity: 200))
         
         let order3 = Order(seed)
         seed = seed + 1
@@ -121,7 +121,7 @@ extension ViewController{
         seed = seed + 1
         allOrders.append(order4)
         order4.addSelectedProduct(SelectedProduct(product: frenchFries, quantity: 40))
-        order4.addSelectedProduct(SelectedProduct(product: doubleCheese, quantity: 4))
+        order4.addSelectedProduct(SelectedProduct(product: spicyChicken, quantity: 4))
         order4.addSelectedProduct(SelectedProduct(product: cokaCoka, quantity: 4))
         order4.addSelectedProduct(SelectedProduct(product: cokeZero, quantity: 4))
         order4.addSelectedProduct(SelectedProduct(product: frenchFries, quantity: 4))
@@ -142,7 +142,7 @@ extension ViewController{
         order5.addSelectedProduct(SelectedProduct(product: doubleCheese, quantity: 5))
         order5.addSelectedProduct(SelectedProduct(product: cokaCoka, quantity: 5))
         order5.addSelectedProduct(SelectedProduct(product: frenchFries, quantity: 5))
-        order5.addSelectedProduct(SelectedProduct(product: doubleCheese, quantity: 5))
+        order5.addSelectedProduct(SelectedProduct(product: spicyChicken, quantity: 5))
         order5.addSelectedProduct(SelectedProduct(product: cokaCoka, quantity: 5))
         order5.addSelectedProduct(SelectedProduct(product: frenchFries, quantity: 5))
         order5.addSelectedProduct(SelectedProduct(product: doubleCheese, quantity: 500))
@@ -174,13 +174,12 @@ extension ViewController: UITableViewDelegate{
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         if tableView == outerTableView{
-            return nil
-        }else{
             let edit = UITableViewRowAction(style: .normal, title: "EDIT") { (rowaction, indexPath) in
                     print ("Editing")
             }
             return [edit]
         }
+        return nil
     }
     
    
@@ -208,6 +207,9 @@ extension ViewController: UITableViewDataSource{
             if let cell = tableView.dequeueReusableCell(withIdentifier: "outercell", for: indexPath) as? OuterTableViewCell{
                 cell.outerLabel.text = "Order Number: \(String(describing: order.orderNum))"
 
+                cell.innerTable.layer.cornerRadius = 10
+                cell.innerTable.layer.borderWidth = 1
+                cell.innerTable.layer.borderColor = UIColor.black.cgColor
                 //The order of the following two lines are important
                 cell.innerTable.orderIndex = indexPath.row
                 cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)

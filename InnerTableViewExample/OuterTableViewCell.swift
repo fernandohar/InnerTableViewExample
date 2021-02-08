@@ -51,25 +51,25 @@ class OuterTableViewCell: UITableViewCell {
 //
 //        let orderNumIxTableHeight = orderNumIxTable.contentSize.height - 20
         //print("\(patientChiNameLabel.text ?? "" ), \(patientHKIDLabel.text ?? "") \(nameColumnHeight), \(orderNumIxTableHeight)")
-        return CGSize(width: targetSize.width, height: outerLabelHeight + innerTable.contentSize.height + 100)
+        return CGSize(width: targetSize.width, height: outerLabelHeight + innerTable.contentSize.height + 40)  //outerLabelHeight's Top and Botton space, Price label's botton space
     }
 }
 
-class InnerTable: ContentSizedTableView{
+class InnerTable: UITableView{
     public var orderIndex  = -1
     
-//    override public var intrinsicContentSize: CGSize{
-//        self.layoutIfNeeded()
-//        return self.contentSize
-//    }
-//    override public var contentSize: CGSize{
-//        didSet{
-//            self.invalidateIntrinsicContentSize()
-//            self.frame.size = self.contentSize
-//        }
-//    }
-//    override public func reloadData() {
-//        super.reloadData()
-//        self.invalidateIntrinsicContentSize()
-//    }
+    override public var intrinsicContentSize: CGSize{
+        self.layoutIfNeeded()
+        return self.contentSize
+    }
+    override public var contentSize: CGSize{
+        didSet{
+            self.invalidateIntrinsicContentSize()
+            self.frame.size = self.contentSize
+        }
+    }
+    override public func reloadData() {
+        super.reloadData()
+        self.invalidateIntrinsicContentSize()
+    }
 }
